@@ -1,3 +1,6 @@
+CREATE DATABASE hospedagem; /*Cria o banco*/
+
+/*Criação das tabelas no banco*/
 CREATE TABLE pessoa(
 
     idpessoa INT(11) PRIMARY KEY,
@@ -15,7 +18,7 @@ CREATE TABLE pessoa(
 
 CREATE TABLE cliente(
 
-    idpessoa INT(11),
+    idcliente INT(11) PRIMARY KEY,
     codigo_cliente VARCHAR(10)
 );
 
@@ -26,8 +29,11 @@ CREATE TABLE consumo(
     preco DECIMAL(7,2),
     status VARCHAR(15),
 
+    idreserva INT(11),
+    idproduto INT(11),
+
     FOREIGN KEY(idreserva) REFERENCES reserva(idreserva),
-    FOREIGN KEY( idproduto) REFERENCES produto(idproduto)
+    FOREIGN KEY(idproduto) REFERENCES produto(idproduto)
 );
 
 CREATE TABLE reserva(
@@ -36,16 +42,21 @@ CREATE TABLE reserva(
     data_entrada DATE,
     data_saida DATE,
     custo_hospedagem DECIMAL(7,2),
-    status VARCHAR(15)
+    status VARCHAR(15),
+    
+    idcliente INT(11),
+    idsuite  INT(11),
+    idfuncionario INT(11),
 
     FOREIGN KEY(idcliente) REFERENCES cliente(idcliente),
-    FOREIGN KEY(idsuites) REFERENCES suite(idsuites),
+    FOREIGN KEY(idsuite) REFERENCES suite(idsuite),
     FOREIGN KEY(idfuncionario) REFERENCES funcionario(idfuncionario)
 );
 
 CREATE TABLE funcionario(
 
-    idpessoa INT(11),
+
+    idfuncionario INT(11) PRIMARY KEY,
     salario DECIMAL(7,2),
     acesso VARCHAR(15),
     login VARCHAR(15),
@@ -77,3 +88,6 @@ CREATE TABLE suite(
     precoDiario DECIMAL(7,2),
     status VARCHAR(15)
 );
+
+
+
